@@ -1,0 +1,7 @@
+@font-face {
+  font-family: aglet sans;
+  src: url(fonts/AgletSans-Bold.eot);
+  src: url(fonts/AgletSans-Bold.eot?#iefix) format('embedded-opentype'), url(fonts/AgletSans-Bold.woff2) format('woff2'), url(fonts/AgletSans-Bold.woff) format('woff'), url(fonts/AgletSans-Bold.ttf) format('truetype'), url(fonts/AgletSans-Bold.svg#AgletSans-Bold) format('svg');
+  font-weight: 700;
+  font-style: normal
+}
