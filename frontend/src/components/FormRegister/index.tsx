@@ -86,9 +86,8 @@ export function FormRegister() {
     address: false
   })
 
-
   return (
-   <Container>
+    <Container>
       <Content>
         <input 
           placeholder="Nome"
@@ -106,8 +105,7 @@ export function FormRegister() {
           }}
           className={error.name ? 'error': ''}
         />
-
-        { error.name && <span>Coloque seu nome completo :)</span> }
+        { error.name && <span>Coloque seu nome completo </span> }
 
 
         <input 
@@ -121,12 +119,11 @@ export function FormRegister() {
           onBlur={event => {
             setError({
               ...error,
-              cpf: (form.cpf == "" || form.cpf.length < 10) 
+              cpf: (form.cpf == "" || form.cpf.length < 14) 
             })
           }}
           className={error.cpf ? 'error': ''}
         />
-
         { error.cpf && <span>Por favor, informe seu CPF</span> }
       
 
@@ -141,15 +138,13 @@ export function FormRegister() {
           onBlur={event => {
             setError({
               ...error,
-              cnpj: (form.cnpj == "" || form.cnpj.length < 13) 
+              cnpj: (form.cnpj == "" || form.cnpj.length < 18) 
             })
           }}
           className={error.cnpj ? 'error': ''}
         />
-
         { error.cnpj && <span>Por favor, informe seu CNPJ MEI</span> }
         
-
 
         <input 
           placeholder="Email"
@@ -168,7 +163,6 @@ export function FormRegister() {
           value={form.email}
           className={error.email ? 'error': ''}
         />
-
         {error.email && <span>Email inválido, tente novamente</span> }
 
         <input 
@@ -182,12 +176,11 @@ export function FormRegister() {
           onBlur={event => {
             setError({
               ...error,
-              phone: (form.phone == "" || form.phone.length < 9) 
+              phone: (form.phone == "" || form.phone.length < 14) 
             })
           }}
           className={error.phone ? 'error': ''}
         />
-
         { error.phone && <span>Por favor, informe seu telefone</span> }
         
 
@@ -205,9 +198,7 @@ export function FormRegister() {
           }}
           className={error.address ? 'error': ''}
         />
-
         { error.address && <span>Por favor, coloque seu endereço completo</span> }
-
 
         <SelectSelfie />
 
@@ -215,9 +206,7 @@ export function FormRegister() {
           Cadastrar
         </button>
 
-    </Content>
-   </Container>
+      </Content>
+    </Container>
   )
 }
- 
-

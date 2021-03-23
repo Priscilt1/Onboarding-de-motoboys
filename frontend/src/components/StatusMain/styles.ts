@@ -32,6 +32,15 @@ export const Content = styled.div`
     }
   }
 
+  .error {
+      border: 0.3rem solid var(--pink);
+    }
+
+    span { 
+      color: var(--pink);
+      font-weight: bold;
+    }
+
   button[type="submit"] {
     width: 100%;
     padding: 0 1.5rem;
