@@ -11,6 +11,7 @@ export function SelectSelfie() {
         </h2>
         <input
           type="file"
+          name="selfie"
         />
    </Container>
   )

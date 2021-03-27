@@ -124,7 +124,7 @@ export function FormRegister() {
           }}
           className={error.cpf ? 'error': ''}
         />
-        { error.cpf && <span>Por favor, informe seu CPF</span> }
+        {error.cpf && <span>Por favor, informe seu CPF</span>}
       
 
         <input 

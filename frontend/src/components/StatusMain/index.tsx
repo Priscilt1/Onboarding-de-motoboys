@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import { Container, Content } from './styles'
+import api from "../../services/api"
  
 interface FormProps {
   cpf: string
@@ -16,7 +17,6 @@ function cpf(value:string) {
       value = value.replace(/(\d{3})(\d)/, '$1-$2') 
 
   return value
-
 }
 
 export function StatusMain() {
@@ -25,8 +25,37 @@ export function StatusMain() {
   })
 
   const [error, setError] = useState({
-    cpf: false
+    cpf: false,
+    invalid: false,
   })
+
+  const [status, setStatus] = useState('')
+
+  const handleClick = () => {
+    // users/status?cpf=12213
+      api.get(`users/status?cpf=${form.cpf}`)
+        .then(response => {
+          const { data } = response
+          console.log(data)
+          if (data.error) {
+            setError({
+              ...error,
+              invalid: true
+            })
+            setStatus('')
+            console.log('aconteceu um erro no backend', data.error)
+          } else {
+            setStatus(data.status)
+            setError({
+              cpf: false,
+              invalid: false
+            })
+          }           
+        })
+        .catch((err) => {
+          console.error("ops! ocorreu um erro" + err);
+      })
+  }
 
   return (
    <Container>
@@ -49,8 +78,15 @@ export function StatusMain() {
           className={error.cpf ? 'error': ''}
         />
         { error.cpf && <span>Por favor, informe seu CPF</span> }
+
+        { form.cpf != '' && error.invalid && <span>CPF inválido</span> }
+
+        {status != '' && <h1>{status}</h1>}
       
-        <button type="submit">
+        <button 
+          type="button"
+          onClick={() => handleClick()}  
+        >
           Consultar
         </button>
       </Content>
