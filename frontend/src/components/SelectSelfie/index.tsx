@@ -2,7 +2,11 @@ import { Container } from './styles'
 import Selfie from './Selfie.svg'
  
 
-export function SelectSelfie() {
+export function SelectSelfie({onFileSelect}:any) {
+  const handleFileInput = (e:any) => {
+    onFileSelect(e.target.files[0])
+  }
+
   return (
    <Container>
       <img src={Selfie} alt="Envie sua selfie"/>
@@ -12,6 +16,7 @@ export function SelectSelfie() {
         <input
           type="file"
           name="selfie"
+          onChange={handleFileInput}
         />
    </Container>
   )

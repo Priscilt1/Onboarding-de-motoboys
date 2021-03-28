@@ -11,19 +11,21 @@ const email = (user, disapprovedInLastTenMinutes) => `
 module.exports = {
   async post(req, res) {
     try {
+      console.log(req.file)
       const newUser = {
         name: req.body.name,
         cpf: req.body.cpf,
         cnpj: req.body.cnpj,
         email: req.body.email,
         phone: req.body.phone,
-        address: req.body.address
+        address: req.body.address,
+        selfie: req.file.filename
       }
       const user = new User(newUser)
 
       user.save(function (err, user) {
         if (err) return console.error(err)
-        res.send({ data: user })
+        res.send({ success: true })
       })
     } catch (error) {
       res.send({ error: true })

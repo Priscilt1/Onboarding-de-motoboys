@@ -36,7 +36,7 @@ export const Content = styled.div`
       font-weight: bold;
     }
 
-  button[type="submit"] {
+  button[type="button"] {
     width: 100%;
     padding: 0 1.5rem;
     height: 4rem;
@@ -55,5 +55,16 @@ export const Content = styled.div`
       color: var(--gray-dark);
       opacity: 0.9;
     }
+  }
+
+  h3 { 
+    position: absolute;
+    top: 0;
+    width: 100%;
+    color: var(--white);
+    background: var(--pink);
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 1rem;
   }
 `

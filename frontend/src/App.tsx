@@ -1,4 +1,4 @@
-import React from "react"
+import SnackbarProvider from 'react-simple-snackbar'
 import { Register } from './components/Register'
 import { GlobalStyle } from './styles/global'
 import { Header } from "./components/Header"
@@ -13,25 +13,27 @@ import {
 
 export default function App() {
   return (
-    <Router>
-      <div>
-        <Header />
+    <SnackbarProvider>
+      <Router>
+        <div>
+          <Header />
 
-        <Switch>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/status">
-            <Status />
-          </Route>
-          <Route path="/">
-            <Welcome />
-          </Route>
-        </Switch>
-      </div>
+          <Switch>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/status">
+              <Status />
+            </Route>
+            <Route path="/">
+              <Welcome />
+            </Route>
+          </Switch>
+        </div>
 
-      <GlobalStyle />
+        <GlobalStyle />
 
-    </Router>
+      </Router>
+    </SnackbarProvider>
   )
 }

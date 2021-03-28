@@ -1,7 +1,18 @@
+import { useSnackbar } from 'react-simple-snackbar'
 import {useState} from 'react'
+import api from "../../services/api"
 
 import { SelectSelfie } from '../SelectSelfie'
 import { Container, Content } from './styles'
+
+// interface File extends Blob {
+//   readonly lastModified: number
+//   readonly name: string
+// } 
+// declare var File: { 
+//   prototype: File
+//   new(fileBits: BlobPart[], fileName: string, options?: FilePropertyBag): File
+// }
 
 interface FormProps {
   name: string,
@@ -10,6 +21,7 @@ interface FormProps {
   email: string,
   phone: string,
   address: string,
+  selfie: File | null
 }
 
 function cpf(value:string) {
@@ -74,7 +86,8 @@ export function FormRegister() {
     cnpj: '',
     email: '',
     phone: '',
-    address: ''
+    address: '',
+    selfie: null
   })
 
   const [error, setError] = useState({
@@ -85,6 +98,50 @@ export function FormRegister() {
     phone: false,
     address: false
   })
+
+  const options = {
+    position: 'top-center',
+    style: {
+      backgroundColor: 'var(--pink)',
+      color: 'var(--white)',
+      textAlign: 'center',
+      fontSize: '1.1rem',
+      fontWeight: 'bold',
+    }
+  }
+  const [openSnackbar] = useSnackbar(options)
+
+  const handleClick = async () => {
+    if(form.name != '' && form.cpf != '' && form.cnpj != '' && form.email != '' && form.phone != '' && form.address != '') {
+     
+      const formData = new FormData()
+        formData.append('name', form.name)
+        formData.append('cpf', form.cpf)
+        formData.append('cnpj', form.cnpj)
+        formData.append('email', form.email)
+        formData.append('phone', form.phone)
+        formData.append('address', form.address)
+
+      if (form.selfie) {
+        formData.append('selfie', form.selfie)
+      }
+      const response = await api.post("users/register", formData)
+      if(response.data.success) {
+        openSnackbar('Seu cadastro foi realizado com sucesso! Acompanhe por aqui o status ou aguarde o email do nosso time 💜 ',  7500 )
+        setForm({
+          name: '',
+          cpf: '',
+          cnpj: '',
+          email: '',
+          phone: '',
+          address: '',
+          selfie: null,
+        })
+      }
+    } else {
+      openSnackbar('Por favor, preencha todos os campos do formulário!')
+    }     
+  }
 
   return (
     <Container>
@@ -190,6 +247,8 @@ export function FormRegister() {
             ...form,
             address: event.target.value
           })}
+          value={form.address}
+
           onBlur={event => {
             setError({
               ...error,
@@ -200,9 +259,19 @@ export function FormRegister() {
         />
         { error.address && <span>Por favor, coloque seu endereço completo</span> }
 
-        <SelectSelfie />
+        <SelectSelfie 
+          onFileSelect={(file:any) => {
+            setForm({
+              ...form,
+              selfie: file
+            })            
+          }}
+        />
 
-        <button type="submit">
+        <button 
+          type="button"
+          onClick={() => handleClick()}
+        >
           Cadastrar
         </button>
 
