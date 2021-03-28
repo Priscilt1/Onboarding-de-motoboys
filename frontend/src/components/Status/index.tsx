@@ -7,7 +7,6 @@ export function Status() {
     <>
       <Container>
         <h1>Acompanhe seu cadastro {'ツ'} </h1>
-
         <StatusMain />
       </Container>
       <Wave />

@@ -1,18 +1,8 @@
 import { useSnackbar } from 'react-simple-snackbar'
 import {useState} from 'react'
 import api from "../../services/api"
-
 import { SelectSelfie } from '../SelectSelfie'
 import { Container, Content } from './styles'
-
-// interface File extends Blob {
-//   readonly lastModified: number
-//   readonly name: string
-// } 
-// declare var File: { 
-//   prototype: File
-//   new(fileBits: BlobPart[], fileName: string, options?: FilePropertyBag): File
-// }
 
 interface FormProps {
   name: string,
@@ -75,7 +65,6 @@ function phone(value:string) {
       value = value.replace(/(\d{2})(\d)/, '($1) $2') 
       value = value.replace(/(\d{4})(\d)/, '$1-$2')
     }
-
     return value
 }
 
@@ -109,6 +98,7 @@ export function FormRegister() {
       fontWeight: 'bold',
     }
   }
+
   const [openSnackbar] = useSnackbar(options)
 
   const handleClick = async () => {
@@ -125,8 +115,9 @@ export function FormRegister() {
       if (form.selfie) {
         formData.append('selfie', form.selfie)
       }
+
       const response = await api.post("users/register", formData)
-      if(response.data.success) {
+      if (response.data.success) {
         openSnackbar('Seu cadastro foi realizado com sucesso! Acompanhe por aqui o status ou aguarde o email do nosso time 💜 ',  7500 )
         setForm({
           name: '',
@@ -137,6 +128,9 @@ export function FormRegister() {
           address: '',
           selfie: null,
         })
+      }
+      if (response.data.error && response.data.message) {
+        openSnackbar(response.data.message)
       }
     } else {
       openSnackbar('Por favor, preencha todos os campos do formulário!')
@@ -162,7 +156,7 @@ export function FormRegister() {
           }}
           className={error.name ? 'error': ''}
         />
-        { error.name && <span>Coloque seu nome completo </span> }
+        {error.name && <span>Coloque seu nome completo </span> }
 
 
         <input 
@@ -222,6 +216,7 @@ export function FormRegister() {
         />
         {error.email && <span>Email inválido, tente novamente</span> }
 
+
         <input 
           placeholder="Telefone"
           onChange={event => setForm({
@@ -259,6 +254,7 @@ export function FormRegister() {
         />
         { error.address && <span>Por favor, coloque seu endereço completo</span> }
 
+
         <SelectSelfie 
           onFileSelect={(file:any) => {
             setForm({
@@ -267,6 +263,7 @@ export function FormRegister() {
             })            
           }}
         />
+
 
         <button 
           type="button"

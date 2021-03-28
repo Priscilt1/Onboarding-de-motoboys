@@ -32,7 +32,6 @@ export default function App() {
         </div>
 
         <GlobalStyle />
-
       </Router>
     </SnackbarProvider>
   )

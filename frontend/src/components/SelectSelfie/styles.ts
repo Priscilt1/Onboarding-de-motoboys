@@ -30,6 +30,7 @@ export const Container = styled.div`
       margin-top: 1rem;
       color: var(--yellow);
       font-size: .95rem;
+      font-weight: bold;
     }
 
     input { 
@@ -42,4 +43,14 @@ export const Container = styled.div`
       opacity: 0;
       cursor: pointer;
     }
+`
+export const ContainerText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h4 {
+    margin-top: 0.5rem;
+    color: var(--white);
+  }
 `

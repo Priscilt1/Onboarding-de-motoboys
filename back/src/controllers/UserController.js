@@ -1,17 +1,27 @@
 const { post } = require("../routes")
-const differenceInMinutes = require('date-fns/differenceInMinutes')
 const User = require('../models/User')
 const mailer = require('../lib/mailer')
+const disapprovedInLastTenMinutes = require('../utils/disapprovedInLastTenMinutes')
 
-const email = (user, disapprovedInLastTenMinutes) => `
-    <h2>Olá ${user.name}, 🙃 </h2>
-    <p>${disapprovedInLastTenMinutes && 'Você foi reprovado. Se cadastre novamente após 10 minutos'}</p>
-`
+const emailApproved = (user) => 
+  `
+    <h2>Olá ${user.name}, </h2>
+    <p>Seu cadastro foi aprovado.</p>
+  `
+const emailDisapproved = (user) => 
+  `
+    <h2>Olá ${user.name}, </h2>
+    <p>Seu cadastro foi recusado! Por favor, se cadastre novamente em 10 minutos.</p>
+  `
+
+const chosenEmail = {
+  approved: emailApproved,
+  disapproved: emailDisapproved
+} 
 
 module.exports = {
   async post(req, res) {
     try {
-      console.log(req.file)
       const newUser = {
         name: req.body.name,
         cpf: req.body.cpf,
@@ -36,7 +46,7 @@ module.exports = {
       User.find(function (err, users) {
         if (err) return console.error(err)
         res.send({ data: users })
-      })
+      }).sort({ createdAt: 'desc' })
     } catch (error) {
       res.send({ error: true })
     }
@@ -44,17 +54,19 @@ module.exports = {
   async status(req, res) {
     try {
       if (req.query.cpf == "") {
-        return res.send({ error: 'Verifique seu cpf'})
+        return res.send({ error: 'Verifique seu CPF'})
       }
 
       User.findOne({ cpf: req.query.cpf }, function (err, user) {
         if (!user) {
-          return res.send({ error: 'Cpf inválido' })
+          return res.send({ error: 'Você não possui cadastro pendente' })
         }
 
-        res.send({ status: user.status })
-      })
-
+        res.send({
+          status: user.status,
+          disapprovedInLastTenMinutes: disapprovedInLastTenMinutes(user)
+        })
+      }).sort({ createdAt: 'desc' })
       
     } catch (error) {
       res.send({ error: true })
@@ -66,47 +78,32 @@ module.exports = {
         if (!user) {
           return res.send({ error: 'Cpf inválido' })
         }
-        
-        const differenceInMinute = differenceInMinutes(
-          Date.now(),
-          user.updatedAt
-        )
-
-        const lastTenMinutes = (differenceInMinute <= 10) 
-        let disapprovedInLastTenMinutes = false
-        if (req.query.status === 'disapproved' && lastTenMinutes) {
-          // informar que ele podera submeter novamente apos esse tempo
-          disapprovedInLastTenMinutes = true
-        }
-
-        // caso cadastro esteja approved ou não existe, exibir info "Você não possui cadastro pendente"
-
 
         user.status = req.query.status
         user.updatedAt = new Date()
         await user.save()
         
-
-        await mailer.sendMail({
-          to: user.email,
-          from: 'no-reply@querodelivery',
-          subject: 'Status do cadastro',
-          html: email(user, disapprovedInLastTenMinutes)
-        })
+        if (user.status != 'waiting') {
+          await mailer.sendMail({
+            to: user.email,
+            from: 'no-reply@querodelivery',
+            subject: 'Status do cadastro',
+            html: chosenEmail[user.status](user)
+          })
+        }
 
         res.send({ status: user.status })
-      })
+      }).sort({ createdAt: 'desc' })
     } catch (error) {
-      
+      res.send({ error: true })
     }
   },
   async destroyAll(req, res) {
     try {
       await User.deleteMany()
-      
       res.send('removido todos os usuarios')
     } catch (error) {
-      
+      res.send({ error: true })
     }
   }
 }

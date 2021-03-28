@@ -10,6 +10,13 @@ export const Container = styled.div`
     font-size: 2rem;
     color: var(--purple);
     text-align: center;
+    padding: 0;
+  }
+  h2 {
+    font-size: 1.2rem;
+    color: var(--green);
+    margin-top: 1rem;
+    padding: 0;
   }
 `
 

@@ -9,7 +9,6 @@ export function WelcomeMain() {
   return (
     <Container>
         <img src={Gif} alt="Gif de delivery"/>
-
         <Content>
           <p>Venha fazer parte do nosso time 💜</p>
 
@@ -25,7 +24,6 @@ export function WelcomeMain() {
             </button>
           </Link>
       </Content>
-
     </Container>
   )
 }

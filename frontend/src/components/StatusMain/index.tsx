@@ -2,8 +2,8 @@ import {useState} from 'react'
 import { Container, Content } from './styles'
 import api from "../../services/api"
 import { StatusIcon } from '../StatusIcon'
-import { stat } from 'node:fs'
- 
+
+
 interface FormProps {
   cpf: string
 }
@@ -32,9 +32,9 @@ export function StatusMain() {
   })
 
   const [status, setStatus] = useState('')
+  const [disapprovedInLastTenMinutes, setDisapprovedInLastTenMinutes] = useState(false)
 
   const handleClick = () => {
-    // users/status?cpf=12213
       api.get(`users/status?cpf=${form.cpf}`)
         .then(response => {
           const { data } = response
@@ -48,6 +48,7 @@ export function StatusMain() {
             console.log('aconteceu um erro no backend', data.error)
           } else {
             setStatus(data.status)
+            setDisapprovedInLastTenMinutes(data.disapprovedInLastTenMinutes)
             setError({
               cpf: false,
               invalid: false
@@ -81,9 +82,9 @@ export function StatusMain() {
         />
         { error.cpf && <span>Por favor, informe seu CPF</span> }
 
-        { form.cpf != '' && error.invalid && <span>CPF inválido</span> }
+        { form.cpf != '' && error.invalid && <span>Você não possui cadastro pendente</span> }
 
-        {status != '' && <StatusIcon status={status} /> }
+        {status != '' && <StatusIcon status={status} disapprovedInLastTenMinutes={disapprovedInLastTenMinutes} /> }
       
         <button 
           type="button"

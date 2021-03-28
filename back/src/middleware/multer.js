@@ -1,6 +1,5 @@
 const multer = require('multer')
 
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './public/images')
@@ -17,7 +16,6 @@ const fileFilter = (req, file, cb) => {
     if(isAccepted) {
         return cb(null, true)
     }
-
     return cb(null, false)
 }
 

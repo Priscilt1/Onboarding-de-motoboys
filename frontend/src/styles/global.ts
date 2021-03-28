@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-
 export const GlobalStyle = createGlobalStyle`
   :root {
     --purple: #9b4dee;
@@ -23,7 +22,6 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
-
 
   html {
     @media (max-width: 1080px) {
@@ -59,10 +57,8 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.2;
   }
 
-
   [disabled] {
     opacity: 0.6;
     cursor: not-allowed; 
   }
-
 `

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const mongooseConectUri = 'mongodb://localhost/querodelivery'
+const mongooseConectUri = process.env.DB_HOST
 
 mongoose.connect(mongooseConectUri, {
   useNewUrlParser: true,

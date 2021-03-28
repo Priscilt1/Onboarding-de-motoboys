@@ -8,7 +8,6 @@ export function Register() {
       <Container>
         <h1>Faça seu cadastro {';)'} </h1>
         <FormRegister />
-  
       </Container>
       <Wave />
     </>
