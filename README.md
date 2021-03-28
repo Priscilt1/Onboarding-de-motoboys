@@ -39,6 +39,42 @@ As seguintes ferramentas foram usadas na construção do projeto:
 ![Captura de Tela 2021-03-28 às 19 42 55](https://user-images.githubusercontent.com/58517014/112770613-d3edb180-8ffd-11eb-87b1-d2a693b5ff34.png)
 
 <img src="https://user-images.githubusercontent.com/58517014/112770460-2ed2d900-8ffd-11eb-88bb-0af0ec3fa5b8.png">
+
+
+## 💻 Como baixar o projeto
+
+```bash
+
+    # Clonar o repositório
+    $ git clone https://github.com/priscilt1/Onboarding-de-motoboys
+
+    # Entrar no diretório
+    $ cd Onboarding-de-motoboys
+
+    # Instalar as dependências do backend
+    $ cd back
+    $ yarn install
+    
+    # Configurar as variaveis de ambiente
+    $ cp .env.sample .env
+
+    # Iniciar o backend
+    $ yarn start
+    
+    # Instalar as dependências do frontend
+    $ cd frontend
+    $ yarn install
+    
+     # Configurar as variaveis de ambiente
+    $ cp .env.sample .env
+
+    # Iniciar o frontend
+    $ yarn start
+    
+```
+
+---
+
 ________________________________
 <br>
 
