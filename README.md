@@ -55,6 +55,9 @@ As seguintes ferramentas foram usadas na construção do projeto:
     $ cd back
     $ yarn install
     
+    # Criar diretório de imagens
+    $ mkdir -p public/images
+    
     # Configurar as variaveis de ambiente
     $ cp .env.sample .env
 
@@ -72,6 +75,19 @@ As seguintes ferramentas foram usadas na construção do projeto:
     $ yarn start
     
 ```
+
+
+## 🌈 Instruções
+
+Para mudar o status do cadastro ficou a seguinte rota:
+
+`http://localhost:5000/users/change?cpf=XXXXX&status=xxxx`
+
+Sendo que os status possíveis são: 
+
+- approved
+- disapproved
+- waiting
 
 ---
 
