@@ -1,6 +1,8 @@
 import {useState} from 'react'
 import { Container, Content } from './styles'
 import api from "../../services/api"
+import { StatusIcon } from '../StatusIcon'
+import { stat } from 'node:fs'
  
 interface FormProps {
   cpf: string
@@ -81,7 +83,7 @@ export function StatusMain() {
 
         { form.cpf != '' && error.invalid && <span>CPF inválido</span> }
 
-        {status != '' && <h1>{status}</h1>}
+        {status != '' && <StatusIcon status={status} /> }
       
         <button 
           type="button"

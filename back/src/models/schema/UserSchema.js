@@ -8,7 +8,7 @@ module.exports = new Schema({
   email: String,
   phone: String,
   address: String,
-  status: { type: String, default: 'pendente' },
+  status: { type: String, default: 'waiting' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   selfie: String

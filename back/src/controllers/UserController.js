@@ -74,12 +74,12 @@ module.exports = {
 
         const lastTenMinutes = (differenceInMinute <= 10) 
         let disapprovedInLastTenMinutes = false
-        if (req.query.status === 'reprovado' && lastTenMinutes) {
+        if (req.query.status === 'disapproved' && lastTenMinutes) {
           // informar que ele podera submeter novamente apos esse tempo
           disapprovedInLastTenMinutes = true
         }
 
-        // caso cadastro esteja aprovado ou não existe, exibir info "Você não possui cadastro pendente"
+        // caso cadastro esteja approved ou não existe, exibir info "Você não possui cadastro pendente"
 
 
         user.status = req.query.status
